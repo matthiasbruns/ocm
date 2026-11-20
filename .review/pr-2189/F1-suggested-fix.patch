@@ -1,0 +1,39 @@
+--- a/.github/workflows/release-bump-version.yaml
++++ b/.github/workflows/release-bump-version.yaml
+@@ -13,6 +13,11 @@
+         required: true
+         default: "patch"
+         type: string
++    secrets:
++      OCM_BOT_PULL_REQUEST_CLIENT_ID:
++        required: true
++      OCM_BOT_PULL_REQUEST_PRIV_KEY:
++        required: true
+ 
+ jobs:
+   create-bump-pr:
+--- a/.github/workflows/release.yaml
++++ b/.github/workflows/release.yaml
+@@ -325,6 +325,9 @@
+     needs: release
+     permissions:
+       contents: read
++    secrets:
++      OCM_BOT_PULL_REQUEST_CLIENT_ID: ${{ secrets.OCM_BOT_PULL_REQUEST_CLIENT_ID }}
++      OCM_BOT_PULL_REQUEST_PRIV_KEY: ${{ secrets.OCM_BOT_PULL_REQUEST_PRIV_KEY }}
+     with:
+       bump-type: patch
+       ref: ${{ github.ref }}
+--- a/.github/workflows/release-branch.yaml
++++ b/.github/workflows/release-branch.yaml
+@@ -112,6 +112,9 @@
+     needs: create-branch
+     permissions:
+       contents: read
++    secrets:
++      OCM_BOT_PULL_REQUEST_CLIENT_ID: ${{ secrets.OCM_BOT_PULL_REQUEST_CLIENT_ID }}
++      OCM_BOT_PULL_REQUEST_PRIV_KEY: ${{ secrets.OCM_BOT_PULL_REQUEST_PRIV_KEY }}
+     with:
+       bump-type: minor
+       ref: ${{ github.ref }}
+\ No newline at end of file
